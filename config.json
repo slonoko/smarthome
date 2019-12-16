@@ -6,8 +6,8 @@
         "url": "192.168.178.63:9092"
     },
     "db": {
-        "url": "jdbc:h2:~/pi;AUTO_SERVER=TRUE",
-        "driver": "org.h2.Driver",
+        "url": "jdbc:postgresql://localhost:5432/pi",
+        "driver": "org.postgresql.Driver",
         "username": "sa",
         "password": "sa"
     }

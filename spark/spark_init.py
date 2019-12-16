@@ -13,6 +13,7 @@ from smarthome_utils import read_configuration
 
 # Initialising pyspark (the spark runner)
 packages = [
+    "org.postgresql:postgresql:42.2.9",
     "com.h2database:h2:1.4.200",
     "com.alibaba:fastjson:1.2.62",
     "org.apache.spark:spark-streaming-kafka_2.11:1.6.3",

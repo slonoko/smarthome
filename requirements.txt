@@ -19,3 +19,4 @@ wrapt==1.11.2
 pyspark==2.4.4
 kafka-python==1.4.7
 lz4==2.1.1
+flask_sqlalchemy==2.4.1
