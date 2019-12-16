@@ -1,14 +1,14 @@
 {
     "spark": {
-        "url": "/home/pi/workspace/spark-2.4.4-bin-hadoop2.7",
+        "url": "/home/pi/workspace/spark-2.4.4-bin-hadoop2.7"
     },
     "kafka": {
         "url": "192.168.178.63:9092"
     },
     "db": {
-        "url": "",
-        "driver": "",
-        "username": "",
-        "password": ""
+        "url": "jdbc:h2:~/pi;AUTO_SERVER=TRUE",
+        "driver": "org.h2.Driver",
+        "username": "sa",
+        "password": "sa"
     }
 }

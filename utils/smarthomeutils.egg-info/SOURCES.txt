@@ -1,0 +1,7 @@
+setup.py
+smarthomeutils.egg-info/PKG-INFO
+smarthomeutils.egg-info/SOURCES.txt
+smarthomeutils.egg-info/dependency_links.txt
+smarthomeutils.egg-info/not-zip-safe
+smarthomeutils.egg-info/requires.txt
+smarthomeutils.egg-info/top_level.txt

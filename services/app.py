@@ -1,5 +1,6 @@
 from flask import Flask, jsonify
 from db.db_connector import DBConnector
+from smarthome_utils import read_configuration
 
 app = Flask(__name__)
 

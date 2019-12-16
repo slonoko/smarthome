@@ -5,13 +5,13 @@ from pyspark.sql.functions import explode
 from pyspark.sql.functions import split
 from pyspark.sql.types import *
 from pyspark.sql.functions import *
-
-
+from smarthome_utils import read_configuration
 class TemperatureData():
 
     def __init__(self, spark, df):
         self.spark = spark
         self.df = df
+        self.config = read_configuration()
         self.temp_schema = StructType(
             [
                 StructField("temperature", DoubleType(), True),
@@ -28,11 +28,11 @@ class TemperatureData():
         )  # adding a db identifier
 
         df.write.format("jdbc").mode("append").options(
-            url="jdbc:h2:~/pi;AUTO_SERVER=TRUE",
+            url=self.config["db"]["url"],
             dbtable="temperature",
-            driver="org.h2.Driver",
-            user="sa",
-            password="sa",
+            driver=self.config["db"]["driver"],
+            user=self.config["db"]["username"],
+            password=self.config["db"]["password"],
         ).save()
         df.unpersist()
 
