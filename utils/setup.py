@@ -1,5 +1,5 @@
 import setuptools
-# To install type: pip install -e .
+# To install type: pip3 install -e .
 setuptools.setup(
     name="smarthomeutils", # Replace with your own username
     version="0.0.1",
