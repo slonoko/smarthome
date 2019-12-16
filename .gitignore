@@ -28,3 +28,4 @@ __pycache__/
 __init__.pyc
 .venv
 *.db
+*.egg-info/
