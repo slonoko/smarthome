@@ -7,7 +7,7 @@ dust = Blueprint('dust', __name__, url_prefix='/dust')
 def current():
     pass
 
-@dust.route("range")
+@dust.route("/range")
 def range():
     from_date = request.args.get('from_date')
     to_date = request.args.get('to_date')

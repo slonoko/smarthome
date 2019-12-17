@@ -8,7 +8,7 @@ temperature = Blueprint('temperature', __name__, url_prefix='/temperature')
 def current():
     pass
 
-@temperature.route("range")
+@temperature.route("/range")
 def range():
     from_date = request.args.get('from_date')
     to_date = request.args.get('to_date')
