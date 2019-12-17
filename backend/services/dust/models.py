@@ -16,4 +16,14 @@ class Dust(db.Model):
     def __init__(self):
         super().__init__()
 
-    
+    def to_json(self):
+        json = {
+            'id': self.id,
+            'value': self.value,
+            'voltage': self.voltage,
+            'density': self.density,
+            'enddate': self.enddate,
+            'startdate': self.startdate
+        }
+
+        return json

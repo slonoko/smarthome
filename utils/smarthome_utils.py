@@ -18,7 +18,7 @@ def corsify_actual_response(response):
 
 def getResponse(current_app, respJson):
     resp = current_app.response_class(
-        response=json.dumps(respJson),
+        response=json.dumps(respJson, indent=4, sort_keys=True, default=str),
         mimetype="application/json"
     )
     resp = corsify_actual_response(resp)
