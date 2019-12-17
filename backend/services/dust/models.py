@@ -1,4 +1,4 @@
-from flask import jsonify, json, request, Flask
+from flask import jsonify, request, Flask
 import datetime
 from services import db
 
@@ -16,7 +16,7 @@ class Dust(db.Model):
     def __init__(self):
         super().__init__()
 
-    def to_json(self):
+    def __json__(self):
         json = {
             'id': self.id,
             'value': self.value,

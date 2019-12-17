@@ -14,7 +14,7 @@ class Temperature(db.Model):
     def __init__(self):
         super().__init__()
 
-    def to_json(self):
+    def __json__(self):
         json = {
             'id': self.id,
             'timestamp': self.timestamp,
