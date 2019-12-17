@@ -1,4 +1,5 @@
 from flask import json, request, Flask, Blueprint
+from services.dust.models import Dust
 
 dust = Blueprint('dust', __name__, url_prefix='/dust')
 

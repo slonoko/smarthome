@@ -1,5 +1,3 @@
-from services.temperature.views import temperature
-from services.dust.views import dust
 import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
@@ -16,11 +14,12 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
+from services.temperature.views import temperature
+from services.dust.views import dust
 app.register_blueprint(dust)
 app.register_blueprint(temperature)
 
 db.create_all()
-
 
 @app.route('/')
 def index():
