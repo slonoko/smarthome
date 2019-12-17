@@ -10,7 +10,7 @@ app.url_map.strict_slashes = False
 
 config = h.read_configuration()
 access_url = config["db"]["url"].split("//")
-access_url = f'postgresql+psycopg2://{config["db"]["username"]}:{config["db"]["password"]}@{access_url[1]}'
+access_url = f'{config["db"]["prefix"]}://{config["db"]["username"]}:{config["db"]["password"]}@{access_url[1]}'
 app.config['SQLALCHEMY_DATABASE_URI'] = access_url
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 

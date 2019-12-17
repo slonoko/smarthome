@@ -9,6 +9,7 @@
         "url": "jdbc:postgresql://localhost:5432/pi",
         "driver": "org.postgresql.Driver",
         "username": "sa",
-        "password": "sa"
+        "password": "sa",
+        "prefix": "postgresql+psycopg2"
     }
 }
