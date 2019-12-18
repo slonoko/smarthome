@@ -1,4 +1,5 @@
 import argparse, json, sys
+import datetime
 
 def read_configuration():
     parser = argparse.ArgumentParser()
@@ -23,3 +24,6 @@ def getResponse(current_app, respJson):
     )
     resp = corsify_actual_response(resp)
     return resp
+
+def to_date(dateString): 
+    return datetime.datetime.strptime(dateString, "%d.%m.%Y-%H:%M")

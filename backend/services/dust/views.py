@@ -5,9 +5,6 @@ import datetime
 
 dust = Blueprint('dust', __name__, url_prefix='/dust')
 
-def toDate(dateString): 
-    return datetime.datetime.strptime(dateString, "%d.%m.%Y-%H:%M").date()
-
 @dust.route('/', methods=['GET'])
 def current():
     latest_dust = Dust.query.order_by(Dust.enddate.desc()).first()
@@ -16,8 +13,8 @@ def current():
 
 @dust.route("/range", methods=['GET'])
 def range():
-    from_date = request.args.get('from_date', default = datetime.date.today(), type = toDate)
-    to_date = request.args.get('to_date', default = datetime.date.today(), type = toDate)
+    from_date = request.args.get('from_date', default = datetime.date.today(), type = h.to_date)
+    to_date = request.args.get('to_date', default = datetime.date.today(), type =  h.to_date)
     list_dusts = Dust.query.filter(Dust.startdate.between(from_date,  to_date)).order_by(Dust.startdate.desc()).all()
     result = [o.__json__() for o in list_dusts]
 
