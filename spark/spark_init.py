@@ -28,10 +28,11 @@ os.environ[
     "PYSPARK_SUBMIT_ARGS"
 ] = f"--master local[2] --packages {','.join(packages)}  pyspark-shell"
 
+
 class SparkInit:
     def __init__(self):
         self.config = read_configuration()
-        
+
         os.environ["SPARK_HOME"] = self.config["spark"]["url"]
         findspark.init()
         findspark.find()
