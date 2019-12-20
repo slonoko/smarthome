@@ -26,9 +26,9 @@ class DustData():
     def write_jdbc(self, df, epoch_id):
         # Transform and write batchDF
         df.persist()
-        df = df.withColumn(
-            "id", monotonically_increasing_id()
-        )  # adding a db identifier
+        # df = df.withColumn(
+        #     "id", monotonically_increasing_id()
+        # )  # adding a db identifier
         df.write.format("jdbc").mode("append").options(
             url=self.config["db"]["url"],
             dbtable="dust",

@@ -1,6 +1,6 @@
 {
     "spark": {
-        "url": "/home/pi/workspace/spark-2.4.4-bin-hadoop2.7"
+        "url": "/home/elie/Applications/spark-2.4.4-bin-hadoop2.7"
     },
     "kafka": {
         "url": "192.168.178.63:9092"
