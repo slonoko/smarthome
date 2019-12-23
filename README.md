@@ -22,3 +22,6 @@ minikube start --vm-driver="virtualbox" --insecure-registry="ek:5000"
 eval $(minikube docker-env) && docker build -t smarthome:0.1 .
 docker tag smarthome:0.1 ek:5000/smarthome:0.1
 docker push ek:5000/smarthome:0.1
+
+
+minikube service ... --url

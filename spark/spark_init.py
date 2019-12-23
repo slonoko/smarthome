@@ -3,8 +3,6 @@ import os
 import threading
 import json
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import explode
-from pyspark.sql.functions import split
 from pyspark.sql.types import *
 from pyspark.sql.functions import *
 from dust_data import DustData
@@ -52,8 +50,8 @@ class SparkInit:
             .load()
         )
         self.df = self.df.withColumn("value", self.df.value.astype("string"))
-        self.dust_data = DustData(self.spark, self.df)
-        self.temperature_data = TemperatureData(self.spark, self.df)
+        self.dust_data = DustData(self.df)
+        self.temperature_data = TemperatureData(self.df)
 
     def start(self):
         self.temperature_data.start_working()

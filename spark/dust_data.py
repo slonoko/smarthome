@@ -1,8 +1,3 @@
-import findspark
-import os
-from pyspark.sql import SparkSession
-from pyspark.sql.functions import explode
-from pyspark.sql.functions import split
 from pyspark.sql.types import *
 from pyspark.sql.functions import *
 from smarthome_utils import read_configuration
@@ -10,8 +5,7 @@ from smarthome_utils import read_configuration
 
 class DustData():
 
-    def __init__(self, spark, df):
-        self.spark = spark
+    def __init__(self, df):
         self.df = df
         self.config = read_configuration()
         self.dust_schema = StructType(
