@@ -17,7 +17,7 @@ pylint==2.4.4
 pyspark==2.4.4
 RPi.GPIO==0.7.0
 six==1.13.0
--e git+https://git.codextension.io/elie/smarthome.git@8b49c0410b3cb557e9448982e51b99eee9b89551#egg=smarthomeutils&subdirectory=utils
+-e git+https://git.codextension.io/elie/smarthome.git@3cff085e4219c1ed616a175fd8b0ea842a30c1f3#egg=smarthomeutils&subdirectory=utils
 spidev==3.4
 SQLAlchemy==1.3.12
 typed-ast==1.4.0
