@@ -17,3 +17,5 @@ CREATE TABLE temperature (
     "timestamp" timestamp without time zone,
     id bigserial PRIMARY KEY
 );
+
+GRANT SELECT,UPDATE,DELETE,INSERT ON ALL TABLES IN SCHEMA public TO sa;

@@ -2,7 +2,7 @@
 # 2. docker run -dit -p 8000:8000 smarthome-api:0.8
 FROM python:latest
 ADD . /app
-ADD ../config.json /app
+ADD config.json /app
 WORKDIR /app
 RUN pip install -r requirements.txt
 ENV app_config config.json
