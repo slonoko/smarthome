@@ -7,7 +7,6 @@ from pyspark.sql.types import *
 from pyspark.sql.functions import *
 from dust_data import DustData
 from temperature_data import TemperatureData
-from smarthome_utils import read_configuration
 
 # Initialising pyspark (the spark runner)
 packages = [
@@ -29,9 +28,8 @@ os.environ[
 
 class SparkInit:
     def __init__(self):
-        self.config = read_configuration()
 
-        os.environ["SPARK_HOME"] = self.config["spark"]["url"]
+        os.environ["SPARK_HOME"] = os.getenv("CX_SPARK_URL")
         findspark.init()
         findspark.find()
 
@@ -44,7 +42,7 @@ class SparkInit:
 
         self.df = (
             self.spark.readStream.format("kafka")
-            .option("kafka.bootstrap.servers", self.config["kafka"]["url"])
+            .option("kafka.bootstrap.servers", os.getenv("CX_KAFKA_URL"))
             .option("subscribe", "dust,temperature")
             .option("startingOffsets", "latest")  # latest/earliest
             .load()

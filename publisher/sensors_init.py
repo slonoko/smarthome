@@ -5,19 +5,18 @@ import time
 import threading
 from kafka import KafkaProducer
 from kafka.errors import KafkaError
-import json
-from smarthome_utils import read_configuration
+import json, os
 
 class Sensors:
 
-    def __init__(self):
-        self.config = read_configuration()
 
+    def __init__(self):
+        self.kafka_url = os.getenv("CX_KAFKA_URL")
         RPi.GPIO.setwarnings(False)
         RPi.GPIO.setmode(RPi.GPIO.BCM)
         self.dht_instance = DHT11(18)
         self.mcp3008_instance = MCP3008(16)
-        self.producer = KafkaProducer(bootstrap_servers=self.config["kafka"]["url"],value_serializer=lambda v: json.dumps(v).encode('utf-8'))
+        self.producer = KafkaProducer(bootstrap_servers=self.kafka_url,value_serializer=lambda v: json.dumps(v).encode('utf-8'))
 
     def start_temp(self):
         while True:

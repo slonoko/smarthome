@@ -6,9 +6,14 @@ import smarthome_utils as h
 app = Flask(__name__, instance_relative_config=True)
 app.url_map.strict_slashes = False
 
+db_url = os.getenv("CX_DB_URL")
+db_prefix = os.getenv("CX_DB_PREFIX")
+db_user = os.getenv("CX_DB_USER")
+db_pwd = os.getenv("CX_DB_PWD")
+
 config = h.read_configuration()
-access_url = config["db"]["url"].split("//")
-access_url = f'{config["db"]["prefix"]}://{config["db"]["username"]}:{config["db"]["password"]}@{access_url[1]}'
+access_url = db_url.split("//")
+access_url = f'{db_prefix}://{db_user}:{db_pwd}@{access_url[1]}'
 app.config['SQLALCHEMY_DATABASE_URI'] = access_url
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 

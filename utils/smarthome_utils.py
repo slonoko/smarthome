@@ -1,21 +1,14 @@
-import argparse, json, sys
+import json
+import sys
 import datetime
 import os
 
-def read_configuration():
-    if "app_config" in os.environ:
-        json_file = os.getenv("app_config")
-    else:
-        parser = argparse.ArgumentParser()
-        parser.add_argument("--config",  nargs='+', help="Configuration file in json format")
-        args = parser.parse_args()
-        json_file = args.config[0]
 
-    config = {}
-    if json_file:
-        with open(json_file) as f:
-            config = json.load(f)
-    return config
+def params():
+    properties = ['CX_SPARK_URL', 'CX_KAFKA_URL', 'CX_DB_URL',
+                  'CX_DB_USER', 'CX_DB_PWD', 'CX_DB_DRIVER', 'CX_DB_PREFIX']
+    return properties
+
 
 def corsify_actual_response(response):
     response.headers.add("Access-Control-Allow-Origin", "*")
@@ -30,5 +23,6 @@ def getResponse(current_app, respJson):
     resp = corsify_actual_response(resp)
     return resp
 
-def to_date(dateString): 
+
+def to_date(dateString):
     return datetime.datetime.strptime(dateString, "%d.%m.%Y-%H:%M")
