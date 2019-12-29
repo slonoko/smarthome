@@ -16,12 +16,24 @@ This is a setup that provides information regarding the temperature, humidity, d
 ## 6. UI integration
 
 
-
+eval $(minikube docker-env)
 docker run -d -p 5000:5000 --restart=always --name ek registry:2
 minikube start --vm-driver="virtualbox" --insecure-registry="ek:5000"
-eval $(minikube docker-env) && docker build -t smarthome:0.1 .
-docker tag smarthome:0.1 ek:5000/smarthome:0.1
-docker push ek:5000/smarthome:0.1
 
+kubectl expose deployment hello-minikube --type=NodePort --port=8080
 
 minikube service ... --url
+
+using ingress:
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: smart-home-ui
+spec:
+  rules:
+    - host: webui.192.168.99.100.nip.io
+      http:
+        paths:
+          - backend:
+             serviceName: smart-home-ui
+             servicePort: 80

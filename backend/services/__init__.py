@@ -11,7 +11,6 @@ db_prefix = os.getenv("CX_DB_PREFIX")
 db_user = os.getenv("CX_DB_USER")
 db_pwd = os.getenv("CX_DB_PWD")
 
-config = h.read_configuration()
 access_url = db_url.split("//")
 access_url = f'{db_prefix}://{db_user}:{db_pwd}@{access_url[1]}'
 app.config['SQLALCHEMY_DATABASE_URI'] = access_url
