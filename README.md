@@ -15,6 +15,13 @@ This is a setup that provides information regarding the temperature, humidity, d
 
 ## 6. UI integration
 
+CX_SPARK_URL="/home/elie/Applications/spark-2.4.4-bin-hadoop2.7"
+CX_KAFKA_URL="192.168.178.63:9092"
+CX_DB_URL="jdbc:postgresql://localhost:5432/pi"
+CX_DB_DRIVER="org.postgresql.Driver"
+CX_DB_USER="sa"
+CX_DB_PWD="sa"
+CX_DB_PREFIX="postgresql+psycopg2"
 
 eval $(minikube docker-env)
 docker run -d -p 5000:5000 --restart=always --name ek registry:2
