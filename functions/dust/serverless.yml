@@ -3,13 +3,9 @@ service: dust
 provider:
   name: kubeless
   runtime: python3.7
-  defaultDNSResolution: 'nip.io'
 
 functions:
   dust:
     handler: handler.dust
-    events:
-      - http:
-          path: /dust
 plugins:
   - serverless-kubeless
