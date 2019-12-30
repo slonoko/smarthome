@@ -7,6 +7,9 @@ For this setup, I need 2 hosts, the raspberryPi and another PC/Server. Running k
 
 *I might eventually migrate my api backend to serverless functions running under* [Kubeless](http://kubeless.io/)
 
+# Product Architecture 
+![Solution architecture](https://git.codextension.io/elie/smarthome/-/wikis/uploads/6ff551d9759422ea542a0c4099075971/Total_view.svg)
+
 # Installation Guide
 
 ## 1. Data streaming with Kafka
