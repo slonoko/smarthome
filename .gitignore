@@ -29,3 +29,4 @@ __init__.pyc
 .venv
 *.db
 *.egg-info/
+package-lock.json
