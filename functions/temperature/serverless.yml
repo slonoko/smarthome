@@ -1,0 +1,31 @@
+# Welcome to Serverless!
+#
+# For full config options, check the kubeless plugin docs:
+#    https://github.com/serverless/serverless-kubeless
+#
+# For documentation on kubeless itself:
+#    http://kubeless.io
+
+# Update the service name below with your own service name
+service: temperature
+
+# Please ensure the serverless-kubeless provider plugin is installed globally.
+# $ npm install -g serverless-kubeless
+#
+# ...before installing project dependencies to register this provider.
+# $ npm install
+
+provider:
+  name: kubeless
+  runtime: python3.7
+  environment:
+    CX_DB_URL: "jdbc:postgresql://10.96.130.96:5432/pi"
+    CX_DB_DRIVER: "org.postgresql.Driver"
+    CX_DB_USER: "sa"
+    CX_DB_PWD: "sa"
+functions:
+  temperature:
+    handler: handler.temperature
+plugins:
+  - serverless-kubeless
+
