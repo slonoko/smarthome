@@ -7,7 +7,7 @@ app = Flask(__name__, instance_relative_config=True)
 app.url_map.strict_slashes = False
 
 db_url = os.getenv("CX_DB_URL")
-db_prefix = os.getenv("CX_DB_PREFIX")
+db_prefix = 'postgresql+psycopg2' if 'postgres' in db_url else '' 
 db_user = os.getenv("CX_DB_USER")
 db_pwd = os.getenv("CX_DB_PWD")
 

@@ -24,12 +24,17 @@ packages = [
 os.environ[
     "PYSPARK_SUBMIT_ARGS"
 ] = f"--master local[2] --packages {','.join(packages)}  pyspark-shell"
-
+'''
+os.environ["SPARK_HOME"]="/home/elie/Applications/spark-2.4.4-bin-hadoop2.7"
+os.environ["CX_KAFKA_URL"]="localhost:9092"
+os.environ["CX_DB_URL"]="jdbc:postgresql://localhost:5432/pi"
+os.environ["CX_DB_DRIVER"]="org.postgresql.Driver"
+os.environ["CX_DB_USER"]="sa"
+os.environ["CX_DB_PWD"]="sa"
+'''
 
 class SparkInit:
     def __init__(self):
-
-        os.environ["SPARK_HOME"] = os.getenv("CX_SPARK_URL")
         findspark.init()
         findspark.find()
 

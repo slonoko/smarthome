@@ -1,13 +1,11 @@
 from pyspark.sql.types import *
 from pyspark.sql.functions import *
-from smarthome_utils import read_configuration
-
+import os
 
 class DustData():
 
     def __init__(self, df):
         self.df = df
-        self.config = read_configuration()
         self.dust_schema = StructType(
             [
                 StructField("value", IntegerType(), True),
@@ -24,11 +22,11 @@ class DustData():
         #     "id", monotonically_increasing_id()
         # )  # adding a db identifier
         df.write.format("jdbc").mode("append").options(
-            url=self.config["db"]["url"],
+            url=os.getenv("CX_DB_URL"),
             dbtable="dust",
-            driver=self.config["db"]["driver"],
-            user=self.config["db"]["username"],
-            password=self.config["db"]["password"],
+            driver=os.getenv("CX_DB_DRIVER"),
+            user=os.getenv("CX_DB_USER"),
+            password=os.getenv("CX_DB_PWD"),
         ).save()
         df.unpersist()
 
