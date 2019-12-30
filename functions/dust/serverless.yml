@@ -1,0 +1,13 @@
+service: dust-info
+
+provider:
+  name: kubeless
+  runtime: python3.7
+
+functions:
+  dust:
+    handler: handler.dust
+
+plugins:
+  - serverless-kubeless
+  - bluebird

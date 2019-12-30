@@ -1,0 +1,12 @@
+{
+  "name": "dust-info",
+  "version": "0.0.1",
+  "description": "This example demonstrates how to setup a simple Python function with Kubeless",
+  "dependencies": {},
+  "main": "handler.py",
+  "autor": "Elie Khoury",
+  "devDependencies": {
+    "bluebird": "^3.7.2",
+    "serverless-kubeless": "^0.9.1"
+  }
+}
