@@ -13,3 +13,7 @@ functions:
     handler: handler.dust
 plugins:
   - serverless-kubeless
+  - serverless-python-requirements
+custom:
+  pythonRequirements:
+    dockerizePip: non-linux

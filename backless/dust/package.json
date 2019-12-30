@@ -3,10 +3,13 @@
   "version": "0.0.1",
   "description": "This example demonstrates how to setup a simple Python function with Kubeless",
   "dependencies": {
-    "kubernetes-client": "^8.3.6",
     "bluebird": "^3.7.2",
+    "kubernetes-client": "^8.3.6",
     "serverless-kubeless": "^0.9.1"
   },
   "main": "handler.py",
-  "autor": "Elie Khoury"
+  "autor": "Elie Khoury",
+  "devDependencies": {
+    "serverless-python-requirements": "^5.0.1"
+  }
 }
