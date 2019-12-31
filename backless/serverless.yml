@@ -7,7 +7,7 @@
 #    http://kubeless.io
 
 # Update the service name below with your own service name
-service: dust
+service: smarthome-less
 
 # Please ensure the serverless-kubeless provider plugin is installed globally.
 # $ npm install -g serverless-kubeless
@@ -24,10 +24,20 @@ provider:
     PGDATABASE: "pi"
     PGPASSWORD: "sa"
     PGPORT: 5432
-
+  package:
+    exclude:
+      - "test/*"
+      - "src/*"
+      - "node_modules/**"
 plugins:
   - serverless-kubeless
 
 functions:
-  dust:
-    handler: handler.dust
+  dust-current:
+    handler: js/dust.current
+  dust-range:
+    handler: js/dust.range
+  temperature-current:
+    handler: js/temperature.current
+  temperature-range:
+    handler: js/temperature.range
