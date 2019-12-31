@@ -35,9 +35,23 @@ plugins:
 functions:
   dust-current:
     handler: js/dust.current
+    events:
+      - http:
+          method: get
   dust-range:
     handler: js/dust.range
+    events:
+      - http:
+          method: post
+          cors: true
   temperature-current:
     handler: js/temperature.current
+    events:
+      - http:
+          method: get
   temperature-range:
     handler: js/temperature.range
+    events:
+      - http:
+          method: post
+          cors: true
