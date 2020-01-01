@@ -24,33 +24,29 @@ provider:
     PGDATABASE: "pi"
     PGPASSWORD: "sa"
     PGPORT: 5432
-  package:
-    exclude:
-      - "test/*"
-      - "src/*"
-      - "node_modules/**"
+
 plugins:
   - serverless-kubeless
 
 functions:
   dust-current:
-    handler: js/dust.current
+    handler: dust.current
     events:
       - http:
           method: get
   dust-range:
-    handler: js/dust.range
+    handler: dust.range
     events:
       - http:
           method: post
           cors: true
   temperature-current:
-    handler: js/temperature.current
+    handler: temperature.current
     events:
       - http:
           method: get
   temperature-range:
-    handler: js/temperature.range
+    handler: temperature.range
     events:
       - http:
           method: post

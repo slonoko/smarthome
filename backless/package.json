@@ -1,9 +1,8 @@
 {
-  "name": "dust",
+  "name": "smarthome-less",
   "version": "1.0.0",
   "description": "Example function for serverless kubeless",
   "dependencies": {
-    "lodash": "^4.17.15",
     "pg": "^7.17.0",
     "serverless-kubeless": "^0.9.1"
   },
@@ -11,10 +10,6 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [
-    "serverless",
-    "kubeless"
-  ],
   "author": "The Kubeless Authors",
   "license": "Apache-2.0"
 }

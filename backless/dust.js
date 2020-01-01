@@ -1,7 +1,6 @@
 "use strict";
 
-const _ = require("lodash");
-const { Pool, Client } = require("pg");
+const { Pool } = require("pg");
 
 module.exports = {
   current: (event, context) =>
