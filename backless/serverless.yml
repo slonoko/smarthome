@@ -19,12 +19,16 @@ provider:
   name: kubeless
   runtime: nodejs12
   environment:
-    PGHOST: "10.96.130.96"
+    PGHOST: "10.96.128.38"
     PGUSER: "sa"
     PGDATABASE: "pi"
     PGPASSWORD: "sa"
     PGPORT: 5432
-
+  package:
+    exclude:
+      - "test/*"
+      - "src/*"
+      - "node_modules/**"
 plugins:
   - serverless-kubeless
 
