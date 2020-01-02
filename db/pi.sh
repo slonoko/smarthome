@@ -25,4 +25,6 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
     );
 
     GRANT SELECT,UPDATE,DELETE,INSERT ON ALL TABLES IN SCHEMA public TO sa; 
+    grant all on sequence temperature_id_seq to sa;
+    grant all on sequence dust_id_seq to sa;
 EOSQL

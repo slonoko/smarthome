@@ -1,0 +1,33 @@
+kind: Ingress
+apiVersion: extensions/v1beta1
+metadata:
+  name: smarthome-less
+  namespace: default
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+    - host: smart-home.info
+      http:
+        paths:
+          - path: /dust/current
+            backend:
+              serviceName: dust-current
+              servicePort: 8080
+          - path: /dust/range
+            backend:
+              serviceName: dust-range
+              servicePort: 8080
+          - path: /temperature/current
+            backend:
+              serviceName: temperature-current
+              servicePort: 8080
+          - path: /temperature/range
+            backend:
+              serviceName: temperature-range
+              servicePort: 8080
+status:
+  loadBalancer:
+    ingress:
+      - ip: 192.168.99.100

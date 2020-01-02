@@ -19,7 +19,7 @@ provider:
   name: kubeless
   runtime: nodejs12
   environment:
-    PGHOST: "10.96.128.38"
+    PGHOST: "10.96.134.34"
     PGUSER: "sa"
     PGDATABASE: "pi"
     PGPASSWORD: "sa"

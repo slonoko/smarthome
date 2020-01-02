@@ -1,0 +1,19 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: smart-home-db
+  namespace: default
+  labels:
+    k8s-app: smart-home-db
+spec:
+  ports:
+    - protocol: TCP
+      port: 5432
+      targetPort: 5432
+      nodePort: 31575
+  selector:
+    k8s-app: smart-home-db
+  clusterIP: 10.96.134.34
+  type: NodePort
+  sessionAffinity: None
+  externalTrafficPolicy: Cluster
