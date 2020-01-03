@@ -89,9 +89,9 @@ For this setup, I need 2 hosts, the raspberryPi and another PC/Server. Running k
 ### Minikube
 
 ```bash
+minikube start --vm-driver="virtualbox" --insecure-registry="ek:5000"
 eval $(minikube docker-env)
 docker run -d -p 5000:5000 --restart=always --name ek registry:2
-minikube start --vm-driver="virtualbox" --insecure-registry="ek:5000"
 
 kubectl expose deployment hello-minikube --type=NodePort --port=8080
 

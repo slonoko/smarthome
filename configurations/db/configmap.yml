@@ -5,6 +5,5 @@ metadata:
   labels:
     k8s-app: smart-home-db
 data:
-  POSTGRES_DB: pi
   POSTGRES_USER: postgres
   POSTGRES_PASSWORD: postgres

@@ -27,7 +27,3 @@ spec:
             backend:
               serviceName: temperature-range
               servicePort: 8080
-status:
-  loadBalancer:
-    ingress:
-      - ip: 192.168.99.100
