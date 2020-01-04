@@ -140,3 +140,13 @@ spec:
              serviceName: smart-home-ui
              servicePort: 80
 ```
+
+```bash
+curl --location --request POST 'http://smart-home.info/temperature/range' \
+--header 'Accept: application/json' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "from_date":"2020-01-02",
+    "to_date":"2020-01-04"
+}'
+```
