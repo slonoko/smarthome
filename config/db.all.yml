@@ -1,8 +1,51 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-config
+  namespace: smart-home
+  labels:
+    k8s-app: smart-home-db
+data:
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: postgres
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: postgres-pv-volume
+  namespace: smart-home
+  labels:
+    type: local
+    k8s-app: smart-home-db
+spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: standard
+  hostPath:
+    path: "/mnt/data"
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: postgres-pv-claim
+  namespace: smart-home
+  labels:
+    k8s-app: smart-home-db
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: standard
+  resources:
+    requests:
+      storage: 1Gi
+---
 kind: Deployment
 apiVersion: apps/v1
 metadata:
   name: smart-home-db
-  namespace: default
+  namespace: smart-home
   labels:
     k8s-app: smart-home-db
   annotations:
@@ -51,3 +94,23 @@ spec:
       maxSurge: 25%
   revisionHistoryLimit: 10
   progressDeadlineSeconds: 600
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: smart-home-db
+  namespace: smart-home
+  labels:
+    k8s-app: smart-home-db
+spec:
+  ports:
+    - protocol: TCP
+      port: 5432
+      targetPort: 5432
+      nodePort: 31575
+  selector:
+    k8s-app: smart-home-db
+  clusterIP: 10.96.134.34
+  type: NodePort
+  sessionAffinity: None
+  externalTrafficPolicy: Cluster

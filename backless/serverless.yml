@@ -18,6 +18,7 @@ service: smarthome-less
 provider:
   name: kubeless
   runtime: nodejs12
+  namespace: smart-home
   environment:
     PGHOST: "10.96.134.34"
     PGUSER: "sa"
@@ -35,23 +36,9 @@ plugins:
 functions:
   dust-current:
     handler: dust.current
-    events:
-      - http:
-          method: get
   dust-range:
     handler: dust.range
-    events:
-      - http:
-          method: post
-          cors: true
   temperature-current:
     handler: temperature.current
-    events:
-      - http:
-          method: get
   temperature-range:
     handler: temperature.range
-    events:
-      - http:
-          method: post
-          cors: true

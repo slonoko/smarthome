@@ -1,9 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: postgres-config
-  labels:
-    k8s-app: smart-home-db
-data:
-  POSTGRES_USER: postgres
-  POSTGRES_PASSWORD: postgres

@@ -89,9 +89,17 @@ For this setup, I need 2 hosts, the raspberryPi and another PC/Server. Running k
 ### Minikube
 
 ```bash
-minikube start --vm-driver="virtualbox" --insecure-registry="ek:5000"
+minikube start --vm-driver="kvm2" --insecure-registry="ek:5000" --memory="4000mb"
 eval $(minikube docker-env)
 docker run -d -p 5000:5000 --restart=always --name ek registry:2
+
+kubectl create ns kubeless
+kubectl label namespace kubeless istio-injection=enabled
+kubectl create -f https://github.com/kubeless/kubeless/releases/download/v1.0.5/kubeless-v1.0.5.yaml
+kubectl create -f https://raw.githubusercontent.com/kubeless/kubeless-ui/master/k8s.yaml
+
+kubectl create ns smart-home
+kubectl label namespace smart-home istio-injection=enabled
 
 kubectl expose deployment hello-minikube --type=NodePort --port=8080
 
@@ -150,3 +158,5 @@ curl --location --request POST 'http://smart-home.info/temperature/range' \
     "to_date":"2020-01-04"
 }'
 ```
+
+kubectl label namespace default istio-injection=enabled
