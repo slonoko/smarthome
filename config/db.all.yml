@@ -21,7 +21,7 @@ spec:
   capacity:
     storage: 5Gi
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   storageClassName: standard
   hostPath:
     path: "/mnt/data"
@@ -35,7 +35,7 @@ metadata:
     k8s-app: smart-home-db
 spec:
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   storageClassName: standard
   resources:
     requests:

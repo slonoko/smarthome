@@ -1,4 +1,3 @@
-import findspark
 import os
 import threading
 import json
@@ -23,7 +22,7 @@ packages = [
 
 os.environ[
     "PYSPARK_SUBMIT_ARGS"
-] = f"--master local[2] --packages {','.join(packages)}  pyspark-shell"
+] = f"--master local[*] --packages {','.join(packages)}  pyspark-shell"
 '''
 os.environ["SPARK_HOME"]="/home/elie/Applications/spark-2.4.4-bin-hadoop2.7"
 os.environ["CX_KAFKA_URL"]="localhost:9092"
@@ -35,9 +34,6 @@ os.environ["CX_DB_PWD"]="sa"
 
 class SparkInit:
     def __init__(self):
-        findspark.init()
-        findspark.find()
-
         self.spark = (
             SparkSession.builder.config("spark.streaming.concurrentJobs", "3")
             .config("spark.scheduler.mode", "FAIR")
