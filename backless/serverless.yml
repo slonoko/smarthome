@@ -20,7 +20,7 @@ provider:
   runtime: nodejs12
   namespace: smart-home
   environment:
-    PGHOST: "10.96.134.34"
+    PGHOST: "10.152.183.120"
     PGUSER: "sa"
     PGDATABASE: "pi"
     PGPASSWORD: "sa"
