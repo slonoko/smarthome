@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: smart-home-spark
-          image: 'ek:5000/smarthome-spark:0.8'
+          image: 'smarthome-spark:0.8'
           resources:
               limits:
                 memory: 2048Mi
