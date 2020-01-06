@@ -6,5 +6,5 @@ ADD *.py /app/
 ADD requirements.txt /app
 WORKDIR /app
 RUN pip3 install -r requirements.txt
-ENTRYPOINT ["python","spark_init.py"]
 EXPOSE 4040
+ENTRYPOINT ["python","spark_init.py"]
