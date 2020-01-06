@@ -23,9 +23,9 @@ packages = [
 os.environ[
     "PYSPARK_SUBMIT_ARGS"
 ] = f"--master local[*] --packages {','.join(packages)}  pyspark-shell"
+
 '''
-os.environ["SPARK_HOME"]="/home/elie/Applications/spark-2.4.4-bin-hadoop2.7"
-os.environ["CX_KAFKA_URL"]="localhost:9092"
+os.environ["CX_KAFKA_URL"]="192.168.178.63:9092"
 os.environ["CX_DB_URL"]="jdbc:postgresql://localhost:5432/pi"
 os.environ["CX_DB_DRIVER"]="org.postgresql.Driver"
 os.environ["CX_DB_USER"]="sa"

@@ -1,0 +1,56 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: smart-home-spark
+  namespace: smart-home
+  labels:
+    k8s-app: smart-home-spark
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: smart-home-spark
+  template:
+    metadata:
+      name: smart-home-spark
+      labels:
+        k8s-app: smart-home-spark
+    spec:
+      containers:
+        - name: smart-home-spark
+          image: 'ek:5000/smarthome-spark:0.8'
+          securityContext:
+            privileged: false
+          envFrom:
+            - configMapRef:
+                name: smarthome-config
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: smart-home-spark
+  namespace: smart-home
+  labels:
+    k8s-app: smart-home-spark
+spec:
+  ports:
+    - protocol: TCP
+      port: 4040
+      targetPort: 4040
+  selector:
+    k8s-app: smart-home-spark
+  type: ClusterIP
+  sessionAffinity: None
+  externalTrafficPolicy: Cluster
