@@ -63,7 +63,7 @@ spec:
     spec:
       containers:
         - name: smart-home-db
-          image: 'ek:5000/smarthome-db:0.8'
+          image: 'smarthome-db:0.8'
           resources: {}
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
