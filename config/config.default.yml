@@ -7,7 +7,7 @@ metadata:
     k8s-app: smart-home
 data:
   CX_KAFKA_URL: 192.168.178.63:9092
-  CX_DB_URL: jdbc:postgresql://10.96.134.34:5432/pi
+  CX_DB_URL: jdbc:postgresql://10.152.183.120:5432/pi
   CX_DB_DRIVER: org.postgresql.Driver
   CX_DB_USER: sa
   CX_DB_PWD: sa
