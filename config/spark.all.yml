@@ -55,6 +55,6 @@ spec:
       targetPort: 4040
   selector:
     k8s-app: smart-home-spark
-  type: ClusterIP
+  type: NodePort
   sessionAffinity: None
   externalTrafficPolicy: Cluster

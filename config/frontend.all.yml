@@ -1,27 +1,27 @@
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: smart-home-api
+  name: smart-home-webui
   namespace: smart-home
   labels:
-    k8s-app: smart-home-api
+    k8s-app: smart-home-webui
 spec:
   replicas: 1
   selector:
     matchLabels:
-      k8s-app: smart-home-api
+      k8s-app: smart-home-webui
   template:
     metadata:
-      name: smart-home-api
+      name: smart-home-webui
       labels:
-        k8s-app: smart-home-api
+        k8s-app: smart-home-webui
     spec:
       containers:
-        - name: smart-home-api
-          image: 'smarthome-api:0.8'
+        - name: smart-home-webui
+          image: 'smarthome-webui:0.8'
           resources:
               limits:
-                memory: 1024Mi
+                memory: 512Mi
                 cpu: 1
           securityContext:
             privileged: false
@@ -44,17 +44,17 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: smart-home-api
+  name: smart-home-webui
   namespace: smart-home
   labels:
-    k8s-app: smart-home-api
+    k8s-app: smart-home-webui
 spec:
   ports:
     - protocol: TCP
-      port: 8000
-      targetPort: 8000
+      port: 80
+      targetPort: 80
   selector:
-    k8s-app: smart-home-api
+    k8s-app: smart-home-webui
   type: NodePort
   sessionAffinity: None
   externalTrafficPolicy: Cluster
