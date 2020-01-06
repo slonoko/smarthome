@@ -24,11 +24,13 @@ os.environ[
     "PYSPARK_SUBMIT_ARGS"
 ] = f"--master local[*] --packages {','.join(packages)}  pyspark-shell"
 
+'''
 os.environ["CX_KAFKA_URL"]="192.168.178.63:9092"
 os.environ["CX_DB_URL"]="jdbc:postgresql://localhost:5432/pi"
 os.environ["CX_DB_DRIVER"]="org.postgresql.Driver"
 os.environ["CX_DB_USER"]="sa"
 os.environ["CX_DB_PWD"]="sa"
+'''
 
 class SparkInit:
     def __init__(self):
