@@ -1,0 +1,59 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: smart-home-api
+  namespace: smart-home
+  labels:
+    k8s-app: smart-home-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: smart-home-api
+  template:
+    metadata:
+      name: smart-home-api
+      labels:
+        k8s-app: smart-home-api
+    spec:
+      containers:
+        - name: smart-home-api
+          image: 'smarthome-api:0.8'
+          resources:
+              limits:
+                memory: 1024Mi
+                cpu: 1
+          securityContext:
+            privileged: false
+          envFrom:
+            - configMapRef:
+                name: smarthome-config
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: smart-home-api
+  namespace: smart-home
+  labels:
+    k8s-app: smart-home-api
+spec:
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: 8000
+  selector:
+    k8s-app: smart-home-api
+  sessionAffinity: None
+  externalTrafficPolicy: Cluster
