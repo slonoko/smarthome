@@ -55,5 +55,3 @@ spec:
       targetPort: 8000
   selector:
     k8s-app: smart-home-api
-  sessionAffinity: None
-  externalTrafficPolicy: Cluster
