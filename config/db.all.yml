@@ -110,7 +110,6 @@ spec:
       nodePort: 31575
   selector:
     k8s-app: smart-home-db
-  clusterIP: 10.96.134.34
   type: NodePort
   sessionAffinity: None
   externalTrafficPolicy: Cluster
