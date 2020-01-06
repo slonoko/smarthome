@@ -1,4 +1,13 @@
 .card {
     min-width: 18rem;
     margin-bottom: 10px;
+    border: none;
+    border-radius: 2px;
+    -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+.light {
+    background-color: white;
+    color: black;
 }
