@@ -13,12 +13,14 @@ class App extends React.Component {
         <CardDeck>
           <InfoCard color="success" icon="thermometer-half" path="/temperature">
             <div className="float-right">
-              Temperature 25<br/>
-              Humidity 45</div>
+              <div className="float-left big-text">&nbsp;&nbsp;</div><div className="float-left big-text">25</div><div className="float-right small-text">°C</div><br />
+              <div className="float-left big-text"></div><div className="float-left big-text">45</div><div className="float-right small-text">g/m<sup>3</sup></div>
+            </div>
           </InfoCard>
           <InfoCard color="info" icon="wind" path="/dust">
             <div className="float-right">
-              Dust density 20</div>
+              <div className="float-left big-text">&nbsp;&nbsp;</div><div className="float-left big-text">25</div><div className="float-right small-text">µg/m<sup>3</sup></div><br />
+            </div>
           </InfoCard>
           <InfoCard color="warning" icon="bullhorn" path="/noise">
 
@@ -32,7 +34,7 @@ class App extends React.Component {
             <InfoDetails>dust</InfoDetails>
           </Route>
           <Route path="/noise" exact>
-            <InfoDetails>noise</InfoDetails>
+            <InfoDetails>{process.env.REACT_APP_API_HOSTNAME}</InfoDetails>
           </Route>
         </Switch>
 

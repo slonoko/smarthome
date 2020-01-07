@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './infocard.component.scss';
 import Container from 'react-bootstrap/Container';
@@ -18,18 +17,16 @@ export default class InfoCard extends Component {
             <Container>
               <Row>
                 <Col><FontAwesomeIcon icon={this.props.icon} size="4x" /></Col>
-                <Col>
+                <Col md="auto">
+                <Link className="white" to={this.props.path}>
                     {this.props.children}
+                    </Link>
                 </Col>
               </Row>
             </Container>
+
         </Card.Body>
-        <Card.Footer className="light">
-        <Link to={this.props.path}>
-          <Button className="float-right" variant={"outline-" + this.props.color} size="sm">Details</Button>
-          </Link>
-          </Card.Footer>
       </Card>
     );
   }
-}
+}        
