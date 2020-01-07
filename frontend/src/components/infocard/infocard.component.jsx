@@ -9,6 +9,8 @@ import Col from 'react-bootstrap/Col';
 import { Link } from "react-router-dom";
 
 export default class InfoCard extends Component {
+  //process.env.REACT_APP_API_HOSTNAME
+  // read more here: https://create-react-app.dev/docs/adding-custom-environment-variables/
   render() {
     return (
       <Card bg={this.props.color} text="white">
