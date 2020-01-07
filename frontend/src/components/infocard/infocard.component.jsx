@@ -14,17 +14,16 @@ export default class InfoCard extends Component {
     return (
       <Card bg={this.props.color} text="white">
         <Card.Body>
+        <Link className="white" to={this.props.path}>
             <Container>
               <Row>
                 <Col><FontAwesomeIcon icon={this.props.icon} size="4x" /></Col>
                 <Col md="auto">
-                <Link className="white" to={this.props.path}>
                     {this.props.children}
-                    </Link>
                 </Col>
               </Row>
             </Container>
-
+            </Link>
         </Card.Body>
       </Card>
     );
