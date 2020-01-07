@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import CardGroup from 'react-bootstrap/CardGroup';
+import CardDeck from 'react-bootstrap/CardDeck';
 import './App.scss';
 import InfoCard from './components/infocard/infocard.component';
 import InfoDetails from './components/infodetails/infodetails.component';
@@ -10,23 +10,20 @@ class App extends React.Component {
   render() {
     return (
       <Fragment>
-        <CardGroup>
+        <CardDeck>
           <InfoCard color="success" icon="thermometer-half" path="/temperature">
             <div className="float-right">
-              Temperature 25</div>
-            <div className="float-right">
+              Temperature 25<br/>
               Humidity 45</div>
           </InfoCard>
           <InfoCard color="info" icon="wind" path="/dust">
             <div className="float-right">
               Dust density 20</div>
-            <div className="float-right">
-              Normal</div>
           </InfoCard>
           <InfoCard color="warning" icon="bullhorn" path="/noise">
 
           </InfoCard>
-        </CardGroup>
+        </CardDeck>
         <Switch>
           <Route path="/temperature" exact>
             <InfoDetails>temperature</InfoDetails>
