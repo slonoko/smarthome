@@ -6,3 +6,7 @@
 .white:hover {
     color: whitesmoke;
 }
+
+.col, .col-md-auto {
+    width: unset !important;
+}
