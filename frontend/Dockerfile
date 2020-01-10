@@ -1,6 +1,12 @@
-# 1. docker build . -t smarthome-webui:0.8
-# 2. docker run -dit -p 80:80 -v /home/elie/Workspace/smarthome/:/config/ smarthome-webui:0.8
-FROM httpd:latest
-COPY ./build/ /usr/local/apache2/htdocs/
-RUN chmod 755 -R /usr/local/apache2/htdocs/
-EXPOSE 80
+# base image
+FROM node:slim
+
+COPY . /app
+# set working directory
+WORKDIR /app
+
+# install and cache app dependencies
+RUN npm install
+
+EXPOSE 3000
+CMD ["npm", "start"]

@@ -11,4 +11,4 @@ data:
   CX_DB_DRIVER: org.postgresql.Driver
   CX_DB_USER: sa
   CX_DB_PWD: sa
-  REACT_APP_API_HOSTNAME: http://10.152.183.120:8000
+  REACT_APP_API_HOSTNAME: http://192.168.178.55:32304/
