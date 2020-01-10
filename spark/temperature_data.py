@@ -4,8 +4,9 @@ import os
 
 class TemperatureData():
 
-    def __init__(self, df):
+    def __init__(self, df, db):
         self.df = df
+        self.db = db
         self.temp_schema = StructType(
             [
                 StructField("temperature", DoubleType(), True),
@@ -21,11 +22,11 @@ class TemperatureData():
         #     "id", monotonically_increasing_id()
         # )  # adding a db identifier
         df.write.format("jdbc").mode("append").options(
-            url=os.getenv("CX_DB_URL"),
+            url=self.db["url"],
             dbtable="temperature",
-            driver=os.getenv("CX_DB_DRIVER"),
-            user=os.getenv("CX_DB_USER"),
-            password=os.getenv("CX_DB_PWD"),
+            driver="org.postgresql.Driver",
+            user=self.db["user"],
+            password=self.db["pwd"],
         ).save()
         df.unpersist()
 

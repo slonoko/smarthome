@@ -4,7 +4,8 @@ import os
 
 class DustData():
 
-    def __init__(self, df):
+    def __init__(self, df, db):
+        self.db = db
         self.df = df
         self.dust_schema = StructType(
             [
@@ -22,11 +23,11 @@ class DustData():
         #     "id", monotonically_increasing_id()
         # )  # adding a db identifier
         df.write.format("jdbc").mode("append").options(
-            url=os.getenv("CX_DB_URL"),
+            url=self.db["url"],
             dbtable="dust",
-            driver=os.getenv("CX_DB_DRIVER"),
-            user=os.getenv("CX_DB_USER"),
-            password=os.getenv("CX_DB_PWD"),
+            driver="org.postgresql.Driver",
+            user=self.db["user"],
+            password=self.db["pwd"],
         ).save()
         df.unpersist()
 

@@ -50,8 +50,14 @@ class SparkInit:
             .load()
         )
         self.df = self.df.withColumn("value", self.df.value.astype("string"))
-        self.dust_data = DustData(self.df)
-        self.temperature_data = TemperatureData(self.df)
+
+        self.db={}
+        self.db["url"]=f'jdbc:postgresql://{os.getenv("SMART_HOME_DB_SERVICE_HOST")}:{os.getenv("SMART_HOME_DB_SERVICE_PORT")}/{os.getenv("CX_DB_NAME")}'
+        self.db["user"]=os.getenv("CX_DB_USER")
+        self.db["pwd"]=os.getenv("CX_DB_PWD")
+
+        self.dust_data = DustData(self.df, self.db)
+        self.temperature_data = TemperatureData(self.df, self.db)
 
     def start(self):
         self.temperature_data.start_working()

@@ -53,6 +53,7 @@ spec:
     - protocol: TCP
       port: 8000
       targetPort: 8000
+      nodePort: 32304
   selector:
     k8s-app: smart-home-api
   type: NodePort

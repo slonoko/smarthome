@@ -21,7 +21,7 @@ spec:
           image: 'smarthome-spark:0.8'
           resources:
               limits:
-                memory: 2048Mi
+                memory: 4096Mi
                 cpu: 2
           securityContext:
             privileged: false
