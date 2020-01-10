@@ -1,5 +1,3 @@
-from services.dust.views import dust
-from services.temperature.views import temperature
 import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
@@ -18,6 +16,9 @@ app.config['SQLALCHEMY_DATABASE_URI'] = access_url
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
+
+from services.dust.views import dust
+from services.temperature.views import temperature
 
 app.register_blueprint(dust)
 app.register_blueprint(temperature)

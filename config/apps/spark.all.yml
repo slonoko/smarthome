@@ -28,6 +28,10 @@ spec:
           envFrom:
             - configMapRef:
                 name: smarthome-config
+      initContainers:
+        - name: init-backend
+          image: busybox
+          command: ['sh', '-c', 'until nslookup smart-home-db; do echo waiting for smart-home-db; sleep 2; done;']
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
       dnsPolicy: ClusterFirst
