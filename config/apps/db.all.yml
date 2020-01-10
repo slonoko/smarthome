@@ -8,38 +8,22 @@ metadata:
 data:
   POSTGRES_USER: postgres
   POSTGRES_PASSWORD: postgres
+  PGPASSWORD: postgres
 ---
-kind: PersistentVolume
+kind: Service
 apiVersion: v1
 metadata:
-  name: postgres-pv-volume
+  name: smart-home-db-svc
   namespace: smart-home
   labels:
-    type: local
-    k8s-app: smart-home-db
+    app: smart-home-db-svc
 spec:
-  capacity:
-    storage: 5Gi
-  accessModes:
-    - ReadWriteMany
-  storageClassName: standard
-  hostPath:
-    path: "/mnt/data"
----
-kind: PersistentVolumeClaim
-apiVersion: v1
-metadata:
-  name: postgres-pv-claim
-  namespace: smart-home
-  labels:
-    k8s-app: smart-home-db
-spec:
-  accessModes:
-    - ReadWriteMany
-  storageClassName: standard
-  resources:
-    requests:
-      storage: 1Gi
+  ports:
+    - protocol: TCP
+      port: 5432
+      name: smart-home-db
+  selector:
+    app: smart-home-db-svc
 ---
 apiVersion: apps/v1
 kind: StatefulSet
@@ -50,24 +34,22 @@ spec:
   selector:
     matchLabels:
       app: smart-home-db
-  serviceName: smart-home-db 
+  serviceName: smart-home-db-svc
   replicas: 1
   template:
     metadata:
       labels:
-        app: smart-home-db
+        app: smart-home-db-svc
     spec:
       containers:
-      - name: smart-home-db
+      - name: smart-home-db-svc
         image: localhost:32000/smarthome-db:0.8
         ports:
           - containerPort: 5432
+            name: smart-home-db
         envFrom:
           - configMapRef:
               name: postgres-config
-        env:
-          - name: PGPASSWORD
-            value: "postgres"
         volumeMounts:
           - mountPath: /var/lib/postgresql/data
             name: postgredb
@@ -82,26 +64,13 @@ spec:
             command: ["psql", "-U", "postgres", "-d", "pi", "-c", "SELECT 1"]
           initialDelaySeconds: 15
           timeoutSeconds: 2
-      volumes:
-        - name: postgredb
-          persistentVolumeClaim:
-            claimName: postgres-pv-claim
----
-kind: Service
-apiVersion: v1
-metadata:
-  name: smart-home-db
-  namespace: smart-home
-  labels:
-    k8s-app: smart-home-db
-spec:
-  ports:
-    - protocol: TCP
-      port: 5432
-      targetPort: 5432
-      nodePort: 31575
-  selector:
-    k8s-app: smart-home-db
-  type: NodePort
-  sessionAffinity: None
-  externalTrafficPolicy: Cluster
+  volumeClaimTemplates:
+    - metadata:
+        name: postgresdb
+      spec:
+        accessModes:
+          - ReadWriteMany
+        storageClassName: standard
+        resources:
+          requests:
+            storage: 1Gi
