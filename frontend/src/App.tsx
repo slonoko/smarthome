@@ -22,10 +22,11 @@ class App extends React.Component<IProps, IState> {
       temperature: {},
       dust: {}
     };
+    this.pullData = this.pullData.bind(this);
   }
 
   componentDidMount() {
-    this.poller = setTimeout(this.pullData, 60000);
+    this.poller = setInterval(this.pullData, 60000);
     this.pullData();
   }
 
@@ -45,7 +46,7 @@ class App extends React.Component<IProps, IState> {
         this.setState({ dust: data });
       })
       .catch(err => {
-        clearTimeout(this.poller);
+        clearInterval(this.poller);
         console.error("Error occured, stopping timer!\n"+err.message);
       });
   }
