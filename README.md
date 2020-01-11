@@ -159,4 +159,7 @@ curl --location --request POST 'http://smart-home.info/temperature/range' \
 }'
 ```
 
+```bash
 kubectl label namespace default istio-injection=enabled
+```
+
