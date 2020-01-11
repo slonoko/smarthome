@@ -8,69 +8,119 @@ metadata:
 data:
   POSTGRES_USER: postgres
   POSTGRES_PASSWORD: postgres
-  PGPASSWORD: postgres
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: postgres-pv-volume
+  namespace: smart-home
+  labels:
+    type: local
+    k8s-app: smart-home-db
+spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteMany
+  storageClassName: standard
+  hostPath:
+    path: "/mnt/data"
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: postgres-pv-claim
+  namespace: smart-home
+  labels:
+    k8s-app: smart-home-db
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: standard
+  resources:
+    requests:
+      storage: 1Gi
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: smart-home-db
+  namespace: smart-home
+  labels:
+    k8s-app: smart-home-db
+  annotations:
+    deployment.kubernetes.io/revision: '1'
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: smart-home-db
+  template:
+    metadata:
+      name: smart-home-db
+      labels:
+        k8s-app: smart-home-db
+    spec:
+      containers:
+        - name: smart-home-db
+          image: 'smarthome-db:0.8'
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            privileged: false
+          ports:
+            - containerPort: 5432
+          envFrom:
+            - configMapRef:
+                name: postgres-config
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: postgredb
+          livenessProbe:
+            exec:
+              command: ["psql", "-U", "postgres", "-d", "pi", "-c", "SELECT 1"]
+            initialDelaySeconds: 30
+            timeoutSeconds: 5
+          readinessProbe:
+            exec:
+              # Check we can execute queries over TCP (skip-networking is off).
+              command: ["psql", "-U", "postgres", "-d", "pi", "-c", "SELECT 1"]
+            initialDelaySeconds: 15
+            timeoutSeconds: 2
+      volumes:
+        - name: postgredb
+          persistentVolumeClaim:
+            claimName: postgres-pv-claim
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600
 ---
 kind: Service
 apiVersion: v1
 metadata:
-  name: smart-home-db-svc
+  name: smart-home-db
   namespace: smart-home
   labels:
-    app: smart-home-db-svc
+    k8s-app: smart-home-db
 spec:
   ports:
     - protocol: TCP
       port: 5432
-      name: smart-home-db
+      targetPort: 5432
+      nodePort: 31575
   selector:
-    app: smart-home-db-svc
----
-apiVersion: apps/v1
-kind: StatefulSet
-metadata:
-  name: smart-home-db
-  namespace: smart-home
-spec:
-  selector:
-    matchLabels:
-      app: smart-home-db
-  serviceName: smart-home-db-svc
-  replicas: 1
-  template:
-    metadata:
-      labels:
-        app: smart-home-db-svc
-    spec:
-      containers:
-      - name: smart-home-db-svc
-        image: localhost:32000/smarthome-db:0.8
-        ports:
-          - containerPort: 5432
-            name: smart-home-db
-        envFrom:
-          - configMapRef:
-              name: postgres-config
-        volumeMounts:
-          - mountPath: /var/lib/postgresql/data
-            name: postgredb
-        livenessProbe:
-          exec:
-            command: ["psql", "-U", "postgres", "-d", "pi", "-c", "SELECT 1"]
-          initialDelaySeconds: 30
-          timeoutSeconds: 5
-        readinessProbe:
-          exec:
-            # Check we can execute queries over TCP (skip-networking is off).
-            command: ["psql", "-U", "postgres", "-d", "pi", "-c", "SELECT 1"]
-          initialDelaySeconds: 15
-          timeoutSeconds: 2
-  volumeClaimTemplates:
-    - metadata:
-        name: postgresdb
-      spec:
-        accessModes:
-          - ReadWriteMany
-        storageClassName: standard
-        resources:
-          requests:
-            storage: 1Gi
+    k8s-app: smart-home-db
+  type: NodePort
+  sessionAffinity: None
+  externalTrafficPolicy: Cluster
