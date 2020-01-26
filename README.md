@@ -109,14 +109,15 @@ minikube service ... --url
 ### Docker
 
 ```bash
-eval $(minikube docker-env)
+docker run -d -p 5000:5000 --restart always --name registry registry:2
+
 docker build backend -t smarthome-api:0.8
 docker build db -t smarthome-db:0.8
 docker build frontend -t smarthome-webui:0.8
 
-docker tag smarthome-api:0.8 ek:5000/smarthome-api:0.8
-docker tag smarthome-db:0.8 ek:5000/smarthome-db:0.8
-docker tag smarthome-webui:0.8 ek:5000/smarthome-webui:0.8
+docker tag smarthome-api:0.8 localhost:5000/smarthome-api:0.8
+docker tag smarthome-db:0.8 localhost:5000/smarthome-db:0.8
+docker tag smarthome-webui:0.8 localhost:5000/smarthome-webui:0.8
 
 docker push ek:5000/smarthome-api:0.8
 docker push ek:5000/smarthome-db:0.8
@@ -162,4 +163,4 @@ curl --location --request POST 'http://smart-home.info/temperature/range' \
 ```bash
 kubectl label namespace default istio-injection=enabled
 ```
-
+kubectl proxy --address='0.0.0.0' --disable-filter=true

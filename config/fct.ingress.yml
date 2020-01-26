@@ -8,7 +8,7 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-    - host: smart-home.info
+    - host: smarthome.io
       http:
         paths:
           - path: /dust/current

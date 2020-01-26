@@ -4,6 +4,7 @@ import './App.scss';
 import InfoCard from './components/infocard/infocard.component';
 import InfoDetails from './components/infodetails/infodetails.component';
 import { Route, Switch } from "react-router-dom";
+import Container from 'react-bootstrap/Container';
 
 interface IState {
   temperature: any,
@@ -54,13 +55,13 @@ class App extends React.Component<IProps, IState> {
   render() {
     return (
       <Fragment>
-        <CardDeck>
+        <CardDeck className="no-margin">
           <InfoCard color="success" icon="thermometer-half" path="/temperature">
             <div className="float-right">
               <div className="float-left big-text">{(this.state.temperature.temperature === undefined) ? "-" : this.state.temperature.temperature}</div><div className="float-right small-text">°C</div>
             </div>
             <div>
-              <div className="float-left big-text">{(this.state.temperature.humidity === undefined) ? "-" : this.state.temperature.humidity}</div><div className="float-right small-text">g/m<sup>3</sup></div>
+              <div className="float-left big-text">{(this.state.temperature.humidity === undefined) ? "-" : this.state.temperature.humidity}</div><div className="float-right small-text">%</div>
             </div>
           </InfoCard>
           <InfoCard color="info" icon="wind" path="/dust">
@@ -72,18 +73,19 @@ class App extends React.Component<IProps, IState> {
 
           </InfoCard>
         </CardDeck>
+        <Container className="margin-fix" fluid>
         <Switch>
           <Route path="/temperature" exact>
-            <InfoDetails>temperature</InfoDetails>
+            <InfoDetails title="Temperature / Humidity"></InfoDetails>
           </Route>
           <Route path="/dust" exact>
-            <InfoDetails>dust</InfoDetails>
+            <InfoDetails title="Dust"></InfoDetails>
           </Route>
           <Route path="/noise" exact>
-            <InfoDetails>{process.env.REACT_APP_API_HOSTNAME}</InfoDetails>
+            <InfoDetails chartType="scatter" title="Noise"></InfoDetails>
           </Route>
         </Switch>
-
+        </Container>
       </Fragment>
     );
   }
