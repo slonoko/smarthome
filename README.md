@@ -109,14 +109,15 @@ minikube service ... --url
 ### Docker
 
 ```bash
-eval $(minikube docker-env)
+docker run -d -p 5000:5000 --restart always --name registry registry:2
+
 docker build backend -t smarthome-api:0.8
 docker build db -t smarthome-db:0.8
 docker build frontend -t smarthome-webui:0.8
 
-docker tag smarthome-api:0.8 ek:5000/smarthome-api:0.8
-docker tag smarthome-db:0.8 ek:5000/smarthome-db:0.8
-docker tag smarthome-webui:0.8 ek:5000/smarthome-webui:0.8
+docker tag smarthome-api:0.8 localhost:5000/smarthome-api:0.8
+docker tag smarthome-db:0.8 localhost:5000/smarthome-db:0.8
+docker tag smarthome-webui:0.8 localhost:5000/smarthome-webui:0.8
 
 docker push ek:5000/smarthome-api:0.8
 docker push ek:5000/smarthome-db:0.8
@@ -125,13 +126,48 @@ docker push ek:5000/smarthome-webui:0.8
 
 ### Kubeless
 
-bla bla ...
+Navigate to the `backless` folder.
+
+first make sure, to install [Kubeless](https://kubeless.io/) along with the `Serverless` nodejs plugin.
+
+once done, run the following from command line:
+
+```bash
+serverless deploy
+```
 
 ## 5. Deployment Postgres Database
 
+Navigate to the `config\apps` folder.
+
+run the following in the command line:
+
+```bash
+kubectl apply -f db.all.yml
+```
+
 ## 6. Exposing results via micro services
 
+Navigate to the `config\apps` folder.
+
+run the following in the command line:
+
+```bash
+kubectl apply -f backend.all.yml
+```
+
 ## 7. UI integration
+
+Navigate to the `config\apps` folder.
+
+run the following in the command line:
+
+```bash
+kubectl apply -f frontend.all.yml
+```
+
+
+## Miscellaneous
 
 ```yml
 using ingress:
@@ -163,3 +199,6 @@ curl --location --request POST 'http://smart-home.info/temperature/range' \
 kubectl label namespace default istio-injection=enabled
 ```
 
+```bash
+kubectl proxy --address='0.0.0.0' --disable-filter=true
+```
