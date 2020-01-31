@@ -16,6 +16,7 @@ interface IProps {
 
 class App extends React.Component<IProps, IState> {
   poller:any;
+  hostname:string;
 
   constructor(props: IProps) {
     super(props);
@@ -23,6 +24,7 @@ class App extends React.Component<IProps, IState> {
       temperature: {},
       dust: {}
     };
+    this.hostname = window.location.hostname + '/api/v1'; 
     this.pullData = this.pullData.bind(this);
   }
 
@@ -32,7 +34,7 @@ class App extends React.Component<IProps, IState> {
   }
 
   pullData() {
-    fetch(process.env.REACT_APP_API_HOSTNAME + '/temperature/')
+    fetch(this.hostname + '/temperature/')
       .then(res => res.json())
       .then((data) => {
         this.setState({ temperature: data });
@@ -41,7 +43,7 @@ class App extends React.Component<IProps, IState> {
         clearTimeout(this.poller);
         console.error("Error occured, stopping timer!\n"+err.message);
       })
-    fetch(process.env.REACT_APP_API_HOSTNAME + '/dust/')
+    fetch(this.hostname + '/dust/')
       .then(res => res.json())
       .then((data) => {
         this.setState({ dust: data });

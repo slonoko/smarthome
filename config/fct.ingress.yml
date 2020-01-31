@@ -8,8 +8,8 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-    - host: smarthome.io
-      http:
+    #- host: smarthome.io
+    - http:
         paths:
           - path: /dust/current
             backend:

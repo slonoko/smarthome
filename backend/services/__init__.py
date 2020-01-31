@@ -9,7 +9,7 @@ app.url_map.strict_slashes = False
 db_prefix = 'postgresql+psycopg2'
 db_user = os.getenv("CX_DB_USER")
 db_pwd = os.getenv("CX_DB_PWD")
-db_ip = f'{os.getenv("SMART_HOME_DB_SERVICE_HOST")}:{os.getenv("SMART_HOME_DB_SERVICE_PORT")}/{os.getenv("CX_DB_NAME")}'
+db_ip = f'smart-home-db:5432/{os.getenv("CX_DB_NAME")}'
 
 access_url = f'{db_prefix}://{db_user}:{db_pwd}@{db_ip}'
 app.config['SQLALCHEMY_DATABASE_URI'] = access_url
