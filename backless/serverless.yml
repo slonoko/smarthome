@@ -20,19 +20,13 @@ provider:
   runtime: nodejs12
   namespace: smart-home
   environment:
-    PGHOST: "10.152.183.120"
+    PGHOST: "10.96.193.143"
     PGUSER: "sa"
     PGDATABASE: "pi"
     PGPASSWORD: "sa"
     PGPORT: 5432
-  package:
-    exclude:
-      - "test/*"
-      - "src/*"
-      - "node_modules/**"
 plugins:
   - serverless-kubeless
-
 functions:
   dust-current:
     handler: dust.current

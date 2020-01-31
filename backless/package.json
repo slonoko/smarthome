@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "description": "Example function for serverless kubeless",
   "dependencies": {
-    "pg": "^7.17.0",
+    "pg": "^7.17.0"
+  },
+  "devDependencies": {
     "serverless-kubeless": "^0.9.1"
   },
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

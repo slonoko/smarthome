@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: smart-home-api
-          image: 'localhost:32000/smarthome-api:0.8'
+          image: 'localhost:5000/smarthome-api:0.8'
           resources:
               limits:
                 memory: 1024Mi
