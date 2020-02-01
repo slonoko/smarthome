@@ -56,8 +56,8 @@ spec:
   type: ClusterIP
   ports:
     - protocol: TCP
-      port: 3000
-      targetPort: 3000
+      port: 4321
+      targetPort: 4321
   selector:
     k8s-app: smart-home-webui
 ---
@@ -80,4 +80,4 @@ spec:
           - path: /ui(.*)
             backend:
               serviceName: smart-home-webui
-              servicePort: 3000
+              servicePort: 4321
