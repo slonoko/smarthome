@@ -52,7 +52,7 @@ class SparkInit:
         self.df = self.df.withColumn("value", self.df.value.astype("string"))
 
         self.db={}
-        self.db["url"]=f'jdbc:postgresql://smart-home-db:5432/{os.getenv("CX_DB_NAME")}'
+        self.db["url"]=f'jdbc:postgresql://{os.getenv("SMART_HOME_DB_SERVICE_HOST")}:5432/{os.getenv("CX_DB_NAME")}'
         self.db["user"]=os.getenv("CX_DB_USER")
         self.db["pwd"]=os.getenv("CX_DB_PWD")
 

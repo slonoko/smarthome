@@ -1,35 +1,35 @@
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: smart-home-webui
+  name: smart-home-spark
   namespace: smart-home
   labels:
-    k8s-app: smart-home-webui
+    k8s-app: smart-home-spark
 spec:
   replicas: 1
   selector:
     matchLabels:
-      k8s-app: smart-home-webui
+      k8s-app: smart-home-spark
   template:
     metadata:
-      name: smart-home-webui
+      name: smart-home-spark
       labels:
-        k8s-app: smart-home-webui
+        k8s-app: smart-home-spark
     spec:
       containers:
-        - name: smart-home-webui
-          image: 'localhost:5000/smarthome-webui:0.8'
+        - name: smart-home-spark
+          image: 'localhost:5000/smarthome-spark:0.8'
           resources:
               limits:
-                memory: 512Mi
-                cpu: 1
+                memory: 4096Mi
+                cpu: 2
           securityContext:
             privileged: false
           envFrom:
             - configMapRef:
                 name: smarthome-config
       initContainers:
-        - name: init-frontend
+        - name: init-spark
           image: busybox
           command: ['sh', '-c', 'until nslookup smart-home-db; do echo waiting for smart-home-db; sleep 2; done;']
       restartPolicy: Always
@@ -48,34 +48,15 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: smart-home-webui
+  name: smart-home-spark
   namespace: smart-home
   labels:
-    k8s-app: smart-home-webui
+    k8s-app: smart-home-spark
 spec:
+  type: ClusterIP
   ports:
     - protocol: TCP
-      port: 3000
+      port: 4040
+      targetPort: 4040
   selector:
-    k8s-app: smart-home-webui
----
-kind: Ingress
-apiVersion: extensions/v1beta1
-metadata:
-  name: smarthome-webui
-  namespace: smart-home
-  annotations:
-    kubernetes.io/ingress.class: nginx
-    nginx.ingress.kubernetes.io/app-root: /
-    nginx.ingress.kubernetes.io/configuration-snippet: |
-      rewrite ^(/ui)$ $1/ permanent;
-    nginx.ingress.kubernetes.io/rewrite-target: /$1
-spec:
-  rules:
-    #- host: cx
-     - http:
-        paths:
-          - path: /ui(.*)
-            backend:
-              serviceName: smart-home-webui
-              servicePort: 3000
+    k8s-app: smart-home-spark
