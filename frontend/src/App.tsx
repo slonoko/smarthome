@@ -24,7 +24,7 @@ class App extends React.Component<IProps, IState> {
       temperature: {},
       dust: {}
     };
-    this.hostname = window.location.hostname + '/api/v1'; 
+    this.hostname = `http://${window.location.hostname}/api/v1`; 
     this.pullData = this.pullData.bind(this);
   }
 
