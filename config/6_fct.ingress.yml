@@ -11,19 +11,19 @@ spec:
     #- host: smarthome.io
     - http:
         paths:
-          - path: /dust/current
+          - path: /api/v1/dust/
             backend:
               serviceName: dust-current
               servicePort: 8080
-          - path: /dust/range
+          - path: /api/v1/dust/range/
             backend:
               serviceName: dust-range
               servicePort: 8080
-          - path: /temperature/current
+          - path: /api/v1/temperature/
             backend:
               serviceName: temperature-current
               servicePort: 8080
-          - path: /temperature/range
+          - path: /api/v1/temperature/range/
             backend:
               serviceName: temperature-range
               servicePort: 8080
