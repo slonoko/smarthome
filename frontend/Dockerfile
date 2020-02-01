@@ -1,12 +1,8 @@
 # base image
-FROM node:slim
+FROM nginx:stable-alpine
 
-COPY . /app
-# set working directory
-WORKDIR /app
-
-# install and cache app dependencies
-RUN npm install
+COPY ./build /usr/share/nginx/html
+COPY ./nginx-default.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 3000
-CMD ["npm", "start"]
+CMD ["nginx", "-g", "daemon off;"]
