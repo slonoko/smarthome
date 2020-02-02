@@ -23,8 +23,11 @@ class Sensors:
             dht = self.dht_instance.read_temp()
             if(dht['temperature']>-99):
                 self.producer.send('temperature', value=dht)
-                # print(dht, end='\r')
-            time.sleep(600) # read the temperature every 10 minutes.
+                # read the temperature every 10 minutes.
+                time.sleep(600)
+            else
+                # keep polling until a temperature is correctly read
+                time.sleep(3)
 
     def start_dust(self):
         while True:
