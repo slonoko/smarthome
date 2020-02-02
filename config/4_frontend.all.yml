@@ -25,9 +25,6 @@ spec:
                 cpu: 1
           securityContext:
             privileged: false
-          envFrom:
-            - configMapRef:
-                name: smarthome-config
       initContainers:
         - name: init-frontend
           image: busybox
