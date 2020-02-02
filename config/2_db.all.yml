@@ -1,14 +1,3 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: postgres-config
-  namespace: smart-home
-  labels:
-    k8s-app: smart-home-db
-data:
-  POSTGRES_USER: postgres
-  POSTGRES_PASSWORD: postgres
----
 kind: PersistentVolume
 apiVersion: v1
 metadata:
@@ -72,9 +61,27 @@ spec:
             privileged: false
           ports:
             - containerPort: 5432
-          envFrom:
-            - configMapRef:
-                name: postgres-config
+          env:
+          - name: CX_DB_NAME
+            valueFrom:
+              secretKeyRef:
+                name: db-access
+                key: schema
+          - name: CX_DB_USER
+            valueFrom:
+              secretKeyRef:
+                name: db-access
+                key: schema_user
+          - name: CX_DB_PWD
+            valueFrom:
+              secretKeyRef:
+                name: db-access
+                key: schema_pwd
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+                secretKeyRef:
+                  key: p_pwd
+                  name: db-access
           volumeMounts:
             - mountPath: /var/lib/postgresql/data
               name: postgredb

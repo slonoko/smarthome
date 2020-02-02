@@ -25,9 +25,27 @@ spec:
                 cpu: 2
           securityContext:
             privileged: false
-          envFrom:
-            - configMapRef:
-                name: smarthome-config
+          env:
+          - name: CX_KAFKA_URL
+            value: "192.168.178.63:9092"
+          - name: CX_DB_NAME
+            valueFrom:
+              secretKeyRef:
+                name: db-access
+                key: schema
+          - name: CX_DB_USER
+            valueFrom:
+              secretKeyRef:
+                name: db-access
+                key: schema_user
+          - name: CX_DB_PWD
+            valueFrom:
+              secretKeyRef:
+                name: db-access
+                key: schema_pwd
+          # envFrom:
+          #   - configMapRef:
+          #       name: smarthome-config
       initContainers:
         - name: init-spark
           image: busybox
