@@ -25,7 +25,7 @@ class Sensors:
                 self.producer.send('temperature', value=dht)
                 # read the temperature every 10 minutes.
                 time.sleep(600)
-            else
+            else:
                 # keep polling until a temperature is correctly read
                 time.sleep(3)
 
