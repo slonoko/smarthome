@@ -1,0 +1,97 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: aria-sensors-rest
+  namespace: aria
+  labels:
+    k8s-app: aria-sensors-rest
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: aria-sensors-rest
+  template:
+    metadata:
+      name: aria-sensors-rest
+      labels:
+        k8s-app: aria-sensors-rest
+    spec:
+      containers:
+        - name: aria-sensors-rest
+          image: 'localhost:5000/aria-sensors-rest:0.8'
+          resources:
+              limits:
+                memory: 1024Mi
+                cpu: 1
+          securityContext:
+            privileged: false
+          env:
+          - name: CX_DB_NAME
+            valueFrom:
+              secretKeyRef:
+                name: db-access
+                key: schema
+          - name: CX_DB_USER
+            valueFrom:
+              secretKeyRef:
+                name: db-access
+                key: schema_user
+          - name: CX_DB_PWD
+            valueFrom:
+              secretKeyRef:
+                name: db-access
+                key: schema_pwd
+          # envFrom:
+          #   - configMapRef:
+          #       name: smarthome-config
+      initContainers:
+        - name: init-backend
+          image: busybox
+          command: ['sh', '-c', 'until nslookup aria-storage; do echo waiting for aria-storage; sleep 2; done;']
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: aria-sensors-rest
+  namespace: aria
+  labels:
+    k8s-app: aria-sensors-rest
+spec:
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: 8000
+  selector:
+    k8s-app: aria-sensors-rest
+---
+kind: Ingress
+apiVersion: extensions/v1beta1
+metadata:
+  name: aria-sensors-rest
+  namespace: aria
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/app-root: /
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+spec:
+  rules:
+    #- host: cx
+     - http:
+        paths:
+          - path: /api/v2(.*)
+            backend:
+              serviceName: aria-sensors-rest
+              servicePort: 8000

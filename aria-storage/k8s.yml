@@ -1,0 +1,83 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: db-access
+  namespace: aria
+type: Opaque
+data:
+  schema_pwd: c2E=
+  schema: cGk=
+  schema_user: c2E=
+  p_pwd: cG9zdGdyZXMK
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: aria-storage
+  namespace: aria
+spec:
+  ports:
+  - port: 5432
+  selector:
+    svc: user
+    app: postgres
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: aria-storage
+  namespace: aria
+spec:
+  selector:
+    matchLabels:
+      svc: user
+      app: postgres
+  serviceName: aria-storage
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        svc: user
+        app: postgres
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+        - name: aria-storage
+          image: 'localhost:5000/aria-storage:0.8'
+          ports:
+            - containerPort: 5432
+          env:
+            - name: PGDATA
+              value: /home/elie/data
+            - name: CX_DB_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: db-access
+                  key: schema
+            - name: CX_DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: db-access
+                  key: schema_user
+            - name: CX_DB_PWD
+              valueFrom:
+                secretKeyRef:
+                  name: db-access
+                  key: schema_pwd
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                  secretKeyRef:
+                    key: p_pwd
+                    name: db-access
+          volumeMounts:
+            - name: aria-storage
+              mountPath: /home/elie/data
+  volumeClaimTemplates:
+    - metadata:
+        name: aria-storage
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        # storageClassName: <custom storage class>
+        resources:
+          requests:
+            storage: 1Gi

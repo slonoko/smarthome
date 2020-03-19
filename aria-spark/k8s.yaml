@@ -1,0 +1,61 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: spark-sa
+  namespace: aria
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRole
+metadata:
+  name: spark-role
+  namespace: aria
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - "pods"
+    verbs:
+      - "*"
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
+metadata:
+  name: spark-role-binding
+  namespace: aria
+subjects:
+  - kind: ServiceAccount
+    name: spark-sa
+    namespace: aria
+roleRef:
+  kind: ClusterRole
+  name: spark-role
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: spark-pv-volume
+  namespace: aria
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    path: "/home/elie/workspace/aria/aria-spark/target"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: spark-pv-claim
+  namespace: aria
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
